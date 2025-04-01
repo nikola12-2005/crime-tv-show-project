@@ -1,5 +1,45 @@
-/* Add custom styles here */
+/* Ensure full height for the body and content */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Flexbox to make sure the footer stays at the bottom */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Footer Styling (Matching Navbar) */
+footer {
+    background-color: #343a40; /* Dark background color to match navbar */
+    color: white;
+    text-align: center;
+    padding: 20px 0; /* Adjust padding for better spacing */
+    width: 100%;
+    margin-top: auto; /* Push the footer to the bottom of the page */
+}
+
+/* Footer Links */
+.footer-links a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    flex: 1;
+}
+
+
+/* Set width and height with responsive behavior */
+.img-responsive {
+    width: 100%;  /* Make images take full width of container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover;  /* Crop and cover the container */
 }

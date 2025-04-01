@@ -1,31 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crime TV Shows</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% extends "crime_shows/base.html" %}
+{% block title %}Crime TV Shows{% endblock %}
 
-<div class="container">
-    <h1>Crime TV Shows</h1>
-    {% if user.is_authenticated %}
-        <a href="{% url 'add_crime_show' %}" class="btn btn-primary">Add New Show</a>
-        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}" class="btn btn-success">Login</a>
-        <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
-    {% endif %}
-    
-    <ul>
-        {% for show in crime_shows %}
-            <li>
-                <a href="{% url 'crime_show_detail' pk=show.pk %}">{{ show.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
-
-</body>
-</html>
+{% block content %}
+<h1>Crime TV Shows</h1>
+<ul class="list-group">
+    {% for show in crime_shows %}
+        <li class="list-group-item">
+            <a href="{% url 'crime_show_detail' show.pk %}">{{ show.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
