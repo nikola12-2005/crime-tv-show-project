@@ -8,7 +8,18 @@
 <p>Genre: {{ crime_show.genre }}</p>
 <p>Rating: {{ crime_show.rating }}</p>
 <p>Release Date: {{ crime_show.release_date }}</p>
-<img src="{{ crime_show.image.url }}" alt="Image" class="img-responsive">
-<a href="{% url 'crime_show_list' %}" class="btn btn-secondary">Back to Crime Shows</a>
+<img src="{{ crime_show.image.url }}" alt="Image" class="img-responsive" style="width: 400px; height: 600px;">
+
+{% comment %} Div class to keep buttons side by side {% endcomment %}
+<div class="d-flex justify-content-center mt-4 gap-3">
+    <a href="{% url 'crime_show_list' %}" class="btn btn-secondary">Back to Crime Shows</a>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'delete_crime_show' crime_show.pk %}" method="post" style="margin-left: 10px;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Remove Show</button>
+        </form>
+    {% endif %}
+</div>
 {% endblock %}
 

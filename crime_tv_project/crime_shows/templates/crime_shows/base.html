@@ -26,6 +26,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'crime_show_list' %}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'add_crime_show' %}">Add Show</a>
@@ -55,7 +58,7 @@
         <div class="container text-center">
             <p>&copy; 2025 Crime TV Shows. All Rights Reserved.</p>
             <div class="footer-links">
-                <a href="mailto:support@crimetv.com" class="text-white">Contact Us</a>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
             </div>
         </div>
     </footer>

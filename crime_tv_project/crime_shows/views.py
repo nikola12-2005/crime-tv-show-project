@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .models import CrimeShow
+from .contact import ContactForm
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail, get_connection
 
 # View to display the list of crime shows
 def crime_show_list(request):
@@ -65,3 +69,39 @@ def add_crime_show(request):
         )
         return redirect('crime_show_list')
     return render(request, 'crime_shows/add_crime_show.html')
+
+# View to allow authenticated users to delete a crime show
+@login_required
+def delete_crime_show(request, pk):
+    crime_show = CrimeShow.objects.get(pk=pk)
+    if request.method == 'POST':
+        crime_show.delete()
+        return redirect('crime_show_list')
+    return redirect('crime_show_detail', pk=pk)
+
+# Contact
+def contact(request):
+	submitted = False
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			cd = form.cleaned_data
+			con = get_connection('django.core.mail.backends.console.EmailBackend')
+			send_mail(
+				cd['subject'],
+				cd['message'],
+				cd.get('email', 'noreply@dcu.ie'),
+				['rebecca.mchugh32@mail.dcu.ie'],
+				connection=con
+			)
+			return HttpResponseRedirect(reverse('contact') + '?submitted=True')
+	else:
+		form = ContactForm()
+		if 'submitted' in request.GET:
+			submitted = True
+	context = {
+		'form': form,
+        'crime_shows': CrimeShow.objects.all(),
+		'submitted': submitted
+	}
+	return render(request, 'crime_shows/contact.html', context)
